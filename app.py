@@ -27,136 +27,174 @@ muscle = st.sidebar.selectbox(
     ["Chest", "Shoulder", "Legs", "Back", "Biceps", "Abs"],
 )
 
-# 1. Injury Filter Input
 injury = st.sidebar.selectbox(
     "Any Recent or Past Injuries?",
     ["None", "Shoulder", "Knee/Legs", "Lower Back"],
 )
 
-# Visual Asset URLs organized by Gender and Muscle/Exercise
-MALE_HEATMAPS = {
-    "chest": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_chest.png",
-    "shoulder": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_shoulder.png",
-    "legs": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_legs.png",
-    "back": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_back.png",
-    "biceps": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_biceps.png",
-    "abs": "https://raw.githubusercontent.com/pubf/muscle-assets/main/male_abs.png",
+# Target Muscle Anatomy Heatmaps (Wikimedia Public Domain)
+HEATMAPS = {
+    "chest": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pectoralis_major.png/320px-Pectoralis_major.png",
+    "shoulder": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Deltoideus.png/320px-Deltoideus.png",
+    "legs": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Quadriceps.png/320px-Quadriceps.png",
+    "back": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Latissimus_dorsi.png/320px-Latissimus_dorsi.png",
+    "biceps": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Biceps_brachii.png/320px-Biceps_brachii.png",
+    "abs": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Rectus_abdominis.png/320px-Rectus_abdominis.png",
 }
 
-FEMALE_HEATMAPS = {
-    "chest": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_chest.png",
-    "shoulder": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_shoulder.png",
-    "legs": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_legs.png",
-    "back": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_back.png",
-    "biceps": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_biceps.png",
-    "abs": "https://raw.githubusercontent.com/pubf/muscle-assets/main/female_abs.png",
+# Direct mapping to verified GIF IDs from the GitHub exercise-db repository
+RAW_BASE_URL = "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/"
+
+EXERCISE_GIF_IDS = {
+    "Incline Dumbbell Press": "0314.gif",
+    "Barbell Bench Press": "0025.gif",
+    "Chest Flyes": "0308.gif",
+    "Cable Crossover": "0161.gif",
+    "Pec Deck Flyes (Joint Safe)": "0308.gif",
+    "Incline Cable Flyes (Joint Safe)": "0161.gif",
+    "Dumbbell Shoulder Press": "0405.gif",
+    "Lateral Raises": "0334.gif",
+    "Front Dumbbell Raises": "0310.gif",
+    "Face Pulls": "0160.gif",
+    "Barbell Squats": "0043.gif",
+    "Leg Press": "0585.gif",
+    "Leg Extensions": "0583.gif",
+    "Lying Leg Curls": "0593.gif",
+    "Leg Extensions (Knee Safe)": "0583.gif",
+    "Lat Pulldowns": "0150.gif",
+    "Seated Cable Rows": "0239.gif",
+    "Dumbbell Single-Arm Rows": "0292.gif",
+    "Barbell Deadlift": "0032.gif",
+    "Chest Supported Rows (Back Safe)": "0239.gif",
+    "Dumbbell Bicep Curls": "0299.gif",
+    "Hammer Curls": "0313.gif",
+    "EZ Bar Preacher Curls": "0165.gif",
+    "Abdominal Crunches": "0274.gif",
+    "Hanging Leg Raises": "0402.gif",
 }
 
-GIFS = {
-    "Male": {
-        "Push-ups": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW5pMXkycnRocjhkNDJ2ZmZzbWFmYmIwbzNneDFyeGgzaDFmdDFxeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/k3xB4Pxf5qA95lVzO8/giphy.gif",
-        "Dumbbell Bench Press": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3YxYnlyYmx1MnRvdmlsaWczNDc5OWZ3aGV0OXUwa2J5czNzeWtlZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKRBB3E7yqG3Lq0/giphy.gif",
-        "Pec Deck Flyes (Joint Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRxMXE4ZDV3MWt5YnAxeW1iZzZwbWZwbmd2ZnhuOG9vYzR5cjB5NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26E3ZfMhSAt7R7A36/giphy.gif",
-        "Dumbbell Shoulder Press": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWQyb3VpMndicnpodXBhMnI3NWpxbzVvZmpseHpwMnM1NDcxdDFjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif",
-        "Lateral Raises": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW9uZGs2ZXFlNm9oYmljcHRiMnIybXh1NDBicXltNWpvemlreTl2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlCqV38B42vN5QY/giphy.gif",
-        "Goblet Squats": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMml1MWo4eTRtbDFkODRhNnJyZXUzdmprcGNqZzBveGdtb3U0OHQxOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKU8RvQuomF5Rvy/giphy.gif",
-        "Leg Extensions (Knee Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1NDIxbmsyc296dWZkMmlyeXR2dTBwbHV5NmhsaXdxMnRvdXk3ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKP4S5sN7L3f1uE/giphy.gif",
-        "Lat Pulldowns": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnJ2dnFwZzNsb3FiYWFqMGFtbXZ3MmIwbWR2ZXRqMWY4MGswMW4zeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKDkDbIDJ1zO69q/giphy.gif",
-        "Chest Supported Rows (Back Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjRndDRsdXpxa3VwNXlsMDRtdDF5bzBzMHByNWUzaGs2OG8yMnE5ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKOn40D8l1c3vMc/giphy.gif",
-        "Dumbbell Curls": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNndxYnhrZWJ5ZjNsbWtoazB3YXVqZnR5Ynpxb2c5eWFnbWZkbmcyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlSno0N42F3zZ5S/giphy.gif",
-        "Crunches": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDdwZHFlNnYydmpxenYyb3ZldG03azJkOXN2MnRhMjVqdHZkcmZhbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKT046D5eFpZp5C/giphy.gif",
-    },
-    "Female": {
-        "Push-ups": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW5pMXkycnRocjhkNDJ2ZmZzbWFmYmIwbzNneDFyeGgzaDFmdDFxeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/k3xB4Pxf5qA95lVzO8/giphy.gif",
-        "Dumbbell Bench Press": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3YxYnlyYmx1MnRvdmlsaWczNDc5OWZ3aGV0OXUwa2J5czNzeWtlZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKRBB3E7yqG3Lq0/giphy.gif",
-        "Pec Deck Flyes (Joint Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjRxMXE4ZDV3MWt5YnAxeW1iZzZwbWZwbmd2ZnhuOG9vYzR5cjB5NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26E3ZfMhSAt7R7A36/giphy.gif",
-        "Dumbbell Shoulder Press": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWQyb3VpMndicnpodXBhMnI3NWpxbzVvZmpseHpwMnM1NDcxdDFjcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif",
-        "Lateral Raises": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW9uZGs2ZXFlNm9oYmljcHRiMnIybXh1NDBicXltNWpvemlreTl2OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlCqV38B42vN5QY/giphy.gif",
-        "Goblet Squats": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMml1MWo4eTRtbDFkODRhNnJyZXUzdmprcGNqZzBveGdtb3U0OHQxOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKU8RvQuomF5Rvy/giphy.gif",
-        "Leg Extensions (Knee Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDh1NDIxbmsyc296dWZkMmlyeXR2dTBwbHV5NmhsaXdxMnRvdXk3ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKP4S5sN7L3f1uE/giphy.gif",
-        "Lat Pulldowns": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnJ2dnFwZzNsb3FiYWFqMGFtbXZ3MmIwbWR2ZXRqMWY4MGswMW4zeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKDkDbIDJ1zO69q/giphy.gif",
-        "Chest Supported Rows (Back Safe)": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjRndDRsdXpxa3VwNXlsMDRtdDF5bzBzMHByNWUzaGs2OG8yMnE5ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKOn40D8l1c3vMc/giphy.gif",
-        "Dumbbell Curls": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNndxYnhrZWJ5ZjNsbWtoazB3YXVqZnR5Ynpxb2c5eWFnbWZkbmcyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlSno0N42F3zZ5S/giphy.gif",
-        "Crunches": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDdwZHFlNnYydmpxenYyb3ZldG03azJkOXN2MnRhMjVqdHZkcmZhbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKT046D5eFpZp5C/giphy.gif",
-    },
-}
-
-# Base Exercise Dictionary
+# Balanced 4-Exercise Workouts per Muscle Group
 EXERCISES = {
     "chest": {
         "beginner": [
-            ("Push-ups", "3 x 10-12"),
-            ("Dumbbell Bench Press", "3 x 10"),
+            ("Incline Dumbbell Press", "3 x 10-12"),
+            ("Barbell Bench Press", "3 x 10"),
+            ("Chest Flyes", "3 x 12"),
+            ("Cable Crossover", "3 x 12"),
         ],
         "intermediate": [
-            ("Dumbbell Bench Press", "4 x 8-10"),
-            ("Push-ups", "3 x 15"),
+            ("Incline Dumbbell Press", "4 x 8-10"),
+            ("Barbell Bench Press", "4 x 8"),
+            ("Chest Flyes", "3 x 12"),
+            ("Cable Crossover", "3 x 12"),
         ],
         "advanced": [
-            ("Dumbbell Bench Press", "5 x 5"),
-            ("Push-ups", "4 x 20"),
+            ("Incline Dumbbell Press", "4 x 6-8"),
+            ("Barbell Bench Press", "4 x 6-8"),
+            ("Chest Flyes", "4 x 10"),
+            ("Cable Crossover", "4 x 10"),
         ],
     },
     "shoulder": {
         "beginner": [
             ("Dumbbell Shoulder Press", "3 x 12"),
             ("Lateral Raises", "3 x 15"),
+            ("Front Dumbbell Raises", "3 x 12"),
+            ("Face Pulls", "3 x 15"),
         ],
         "intermediate": [
-            ("Dumbbell Shoulder Press", "4 x 8"),
-            ("Lateral Raises", "3 x 12"),
+            ("Dumbbell Shoulder Press", "4 x 8-10"),
+            ("Lateral Raises", "4 x 12"),
+            ("Front Dumbbell Raises", "3 x 12"),
+            ("Face Pulls", "4 x 12"),
         ],
         "advanced": [
-            ("Dumbbell Shoulder Press", "5 x 5"),
-            ("Lateral Raises", "4 x 10"),
+            ("Dumbbell Shoulder Press", "4 x 6-8"),
+            ("Lateral Raises", "5 x 10"),
+            ("Front Dumbbell Raises", "4 x 10"),
+            ("Face Pulls", "4 x 10"),
         ],
     },
     "legs": {
-        "beginner": [("Goblet Squats", "3 x 12"), ("Leg Extensions", "3 x 12")],
+        "beginner": [
+            ("Barbell Squats", "3 x 12"),
+            ("Leg Press", "3 x 12"),
+            ("Leg Extensions", "3 x 12"),
+            ("Lying Leg Curls", "3 x 12"),
+        ],
         "intermediate": [
-            ("Goblet Squats", "4 x 8"),
-            ("Leg Extensions", "3 x 10"),
+            ("Barbell Squats", "4 x 10"),
+            ("Leg Press", "4 x 10"),
+            ("Leg Extensions", "3 x 12"),
+            ("Lying Leg Curls", "3 x 12"),
         ],
         "advanced": [
-            ("Goblet Squats", "5 x 5"),
-            ("Leg Extensions", "4 x 8"),
+            ("Barbell Squats", "4 x 8"),
+            ("Leg Press", "4 x 8"),
+            ("Leg Extensions", "4 x 10"),
+            ("Lying Leg Curls", "4 x 10"),
         ],
     },
     "back": {
         "beginner": [
             ("Lat Pulldowns", "3 x 12"),
             ("Seated Cable Rows", "3 x 12"),
+            ("Dumbbell Single-Arm Rows", "3 x 12"),
+            ("Face Pulls", "3 x 15"),
         ],
         "intermediate": [
-            ("Lat Pulldowns", "4 x 8"),
-            ("Seated Cable Rows", "4 x 8"),
+            ("Lat Pulldowns", "4 x 10"),
+            ("Seated Cable Rows", "4 x 10"),
+            ("Dumbbell Single-Arm Rows", "3 x 10"),
+            ("Barbell Deadlift", "3 x 8"),
         ],
         "advanced": [
-            ("Lat Pulldowns", "5 x 5"),
-            ("Seated Cable Rows", "4 x 6-8"),
+            ("Lat Pulldowns", "4 x 8"),
+            ("Seated Cable Rows", "4 x 8"),
+            ("Dumbbell Single-Arm Rows", "4 x 8"),
+            ("Barbell Deadlift", "4 x 6"),
         ],
     },
     "biceps": {
-        "beginner": [("Dumbbell Curls", "3 x 12")],
-        "intermediate": [("Dumbbell Curls", "4 x 10")],
-        "advanced": [("Dumbbell Curls", "4 x 8")],
+        "beginner": [
+            ("Dumbbell Bicep Curls", "3 x 12"),
+            ("Hammer Curls", "3 x 12"),
+        ],
+        "intermediate": [
+            ("Dumbbell Bicep Curls", "4 x 10"),
+            ("Hammer Curls", "4 x 10"),
+            ("EZ Bar Preacher Curls", "3 x 10"),
+        ],
+        "advanced": [
+            ("Dumbbell Bicep Curls", "4 x 8"),
+            ("Hammer Curls", "4 x 8"),
+            ("EZ Bar Preacher Curls", "4 x 8"),
+        ],
     },
     "abs": {
-        "beginner": [("Crunches", "3 x 15")],
-        "intermediate": [("Crunches", "4 x 20")],
-        "advanced": [("Crunches", "5 x 20")],
+        "beginner": [
+            ("Abdominal Crunches", "3 x 15"),
+            ("Hanging Leg Raises", "3 x 12"),
+        ],
+        "intermediate": [
+            ("Abdominal Crunches", "4 x 20"),
+            ("Hanging Leg Raises", "4 x 12"),
+        ],
+        "advanced": [
+            ("Abdominal Crunches", "5 x 20"),
+            ("Hanging Leg Raises", "4 x 15"),
+        ],
     },
 }
 
 if st.sidebar.button("🚀 Generate Workout Routine"):
   moves = EXERCISES.get(muscle.lower(), {}).get(level.lower(), []).copy()
 
-  # 1. Injury Logic Replacement
   replaced_warning = False
   if injury == "Shoulder" and muscle.lower() == "chest":
     moves = [
         ("Pec Deck Flyes (Joint Safe)", "3 x 12"),
-        ("Push-ups", "3 x 10"),
+        ("Incline Cable Flyes (Joint Safe)", "3 x 12"),
     ]
     replaced_warning = True
   elif injury == "Knee/Legs" and muscle.lower() == "legs":
@@ -174,14 +212,8 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
   else:
     st.success(f"Routine Generated for {muscle} ({level})")
 
-  # Select Heatmap URL based on Gender & Selected Muscle
-  heatmap_url = (
-      MALE_HEATMAPS.get(muscle.lower())
-      if gender == "Male"
-      else FEMALE_HEATMAPS.get(muscle.lower())
-  )
+  heatmap_url = HEATMAPS.get(muscle.lower())
 
-  # Display Each Exercise with 3-Column Layout (Info, Heatmap, GIF)
   moves_list, sets_list = [], []
   for idx, (move, sets_reps) in enumerate(moves, 1):
     st.markdown(f"### {idx}. {move}")
@@ -194,21 +226,19 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
       )
 
     with col2:
-      st.write("**Target Heatmap**")
+      st.write("**Target Anatomy**")
       st.image(
           heatmap_url,
-          caption=f"{muscle} Heatmap ({gender})",
+          caption=f"{muscle} Muscle Group",
           use_container_width=True,
       )
 
     with col3:
       st.write("**Exercise Execution**")
-      gif_url = GIFS.get(gender, {}).get(
-          move,
-          "https://media.giphy.com/media/3o7TKRBB3E7yqG3Lq0/giphy.gif",
-      )
+      gif_file = EXERCISE_GIF_IDS.get(move, "0025.gif")
+      gif_url = f"{RAW_BASE_URL}{gif_file}"
       st.image(
-          gif_url, caption=f"Execution ({gender})", use_container_width=True
+          gif_url, caption=f"Execution: {move}", use_container_width=True
       )
 
     st.divider()
@@ -216,7 +246,6 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
     moves_list.append(move)
     sets_list.append(int(sets_reps.split("x")[0].strip()))
 
-  # Matplotlib Bar Chart
   fig, ax = plt.subplots(figsize=(7, 3))
   ax.barh(moves_list, sets_list, color="#2ecc71")
   ax.set_xlabel("Sets")
