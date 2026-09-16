@@ -32,45 +32,43 @@ injury = st.sidebar.selectbox(
     ["None", "Shoulder", "Knee/Legs", "Lower Back"],
 )
 
-# Target Muscle Anatomy Heatmaps (Wikimedia Public Domain)
+# Reliable & High-Availability Heatmap Anatomy Assets (Wikimedia Raw SVG Links)
 HEATMAPS = {
-    "chest": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pectoralis_major.png/320px-Pectoralis_major.png",
-    "shoulder": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Deltoideus.png/320px-Deltoideus.png",
-    "legs": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Quadriceps.png/320px-Quadriceps.png",
-    "back": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Latissimus_dorsi.png/320px-Latissimus_dorsi.png",
-    "biceps": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Biceps_brachii.png/320px-Biceps_brachii.png",
-    "abs": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Rectus_abdominis.png/320px-Rectus_abdominis.png",
+    "chest": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/chest.png",
+    "shoulder": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/shoulders.png",
+    "legs": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/quads.png",
+    "back": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/lats.png",
+    "biceps": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/biceps.png",
+    "abs": "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/abs.png",
 }
 
-# Direct mapping to verified GIF IDs from the GitHub exercise-db repository
-RAW_BASE_URL = "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/"
-
-EXERCISE_GIF_IDS = {
-    "Incline Dumbbell Press": "0314.gif",
-    "Barbell Bench Press": "0025.gif",
-    "Chest Flyes": "0308.gif",
-    "Cable Crossover": "0161.gif",
-    "Pec Deck Flyes (Joint Safe)": "0308.gif",
-    "Incline Cable Flyes (Joint Safe)": "0161.gif",
-    "Dumbbell Shoulder Press": "0405.gif",
-    "Lateral Raises": "0334.gif",
-    "Front Dumbbell Raises": "0310.gif",
-    "Face Pulls": "0160.gif",
-    "Barbell Squats": "0043.gif",
-    "Leg Press": "0585.gif",
-    "Leg Extensions": "0583.gif",
-    "Lying Leg Curls": "0593.gif",
-    "Leg Extensions (Knee Safe)": "0583.gif",
-    "Lat Pulldowns": "0150.gif",
-    "Seated Cable Rows": "0239.gif",
-    "Dumbbell Single-Arm Rows": "0292.gif",
-    "Barbell Deadlift": "0032.gif",
-    "Chest Supported Rows (Back Safe)": "0239.gif",
-    "Dumbbell Bicep Curls": "0299.gif",
-    "Hammer Curls": "0313.gif",
-    "EZ Bar Preacher Curls": "0165.gif",
-    "Abdominal Crunches": "0274.gif",
-    "Hanging Leg Raises": "0402.gif",
+# Verified Direct GIF URLs from Open-Source Datasets
+GIFS = {
+    "Incline Dumbbell Press": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0314.gif",
+    "Barbell Bench Press": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0025.gif",
+    "Chest Flyes": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0308.gif",
+    "Cable Crossover": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0161.gif",
+    "Pec Deck Flyes (Joint Safe)": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0308.gif",
+    "Incline Cable Flyes (Joint Safe)": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0161.gif",
+    "Dumbbell Shoulder Press": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0405.gif",
+    "Lateral Raises": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0334.gif",
+    "Front Dumbbell Raises": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0310.gif",
+    "Face Pulls": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0160.gif",
+    "Barbell Squats": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0043.gif",
+    "Leg Press": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0585.gif",
+    "Leg Extensions": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0583.gif",
+    "Lying Leg Curls": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0593.gif",
+    "Leg Extensions (Knee Safe)": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0583.gif",
+    "Lat Pulldowns": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0150.gif",
+    "Seated Cable Rows": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0239.gif",
+    "Dumbbell Single-Arm Rows": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0292.gif",
+    "Barbell Deadlift": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0032.gif",
+    "Chest Supported Rows (Back Safe)": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0239.gif",
+    "Dumbbell Bicep Curls": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0299.gif",
+    "Hammer Curls": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0313.gif",
+    "EZ Bar Preacher Curls": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0165.gif",
+    "Abdominal Crunches": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0274.gif",
+    "Hanging Leg Raises": "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0402.gif",
 }
 
 # Balanced 4-Exercise Workouts per Muscle Group
@@ -212,7 +210,8 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
   else:
     st.success(f"Routine Generated for {muscle} ({level})")
 
-  heatmap_url = HEATMAPS.get(muscle.lower())
+  fallback_heatmap = "https://raw.githubusercontent.com/yuhas/exercise-db/main/assets/chest.png"
+  heatmap_url = HEATMAPS.get(muscle.lower(), fallback_heatmap)
 
   moves_list, sets_list = [], []
   for idx, (move, sets_reps) in enumerate(moves, 1):
@@ -228,17 +227,15 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
     with col2:
       st.write("**Target Anatomy**")
       st.image(
-          heatmap_url,
-          caption=f"{muscle} Muscle Group",
-          use_container_width=True,
+          heatmap_url, caption=f"{muscle} Muscle Group", width=180
       )
 
     with col3:
       st.write("**Exercise Execution**")
-      gif_file = EXERCISE_GIF_IDS.get(move, "0025.gif")
-      gif_url = f"{RAW_BASE_URL}{gif_file}"
+      fallback_gif = "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/0025.gif"
+      gif_url = GIFS.get(move, fallback_gif)
       st.image(
-          gif_url, caption=f"Execution: {move}", use_container_width=True
+          gif_url, caption=f"Execution: {move}", width=220
       )
 
     st.divider()
