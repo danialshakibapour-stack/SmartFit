@@ -32,46 +32,45 @@ injury = st.sidebar.selectbox(
     ["None", "Shoulder", "Knee/Legs", "Lower Back"],
 )
 
-# Base URL for public domain exercise assets
-BASE_IMG = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/"
-
-# Static Muscle Group Anatomy Indicators
+# Public-Domain Wikimedia Heatmaps (Raw Direct Public PNG Links)
 HEATMAPS = {
-    "chest": f"{BASE_IMG}Barbell_Bench_Press/0.jpg",
-    "shoulder": f"{BASE_IMG}Arnold_Dumbbell_Press/0.jpg",
-    "legs": f"{BASE_IMG}Barbell_Full_Squat/0.jpg",
-    "back": f"{BASE_IMG}Barbell_Deadlift/0.jpg",
-    "biceps": f"{BASE_IMG}Barbell_Curl/0.jpg",
-    "abs": f"{BASE_IMG}Air_Bike/0.jpg",
+    "chest": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pectoralis_major.png",
+    "shoulder": "https://upload.wikimedia.org/wikipedia/commons/2/26/Deltoideus.png",
+    "legs": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Quadriceps.png",
+    "back": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Latissimus_dorsi.png",
+    "biceps": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Biceps_brachii.png",
+    "abs": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Rectus_abdominis.png",
 }
 
-# Exercise Execution Images (Working Public URLs)
-EXERCISE_IMAGES = {
-    "Incline Dumbbell Press": f"{BASE_IMG}Alternate_Incline_Dumbbell_Curl/1.jpg",
-    "Barbell Bench Press": f"{BASE_IMG}Barbell_Bench_Press/1.jpg",
-    "Chest Flyes": f"{BASE_IMG}Air_Bike/1.jpg",
-    "Cable Crossover": f"{BASE_IMG}Air_Bike/0.jpg",
-    "Pec Deck Flyes (Joint Safe)": f"{BASE_IMG}Air_Bike/1.jpg",
-    "Incline Cable Flyes (Joint Safe)": f"{BASE_IMG}Air_Bike/0.jpg",
-    "Dumbbell Shoulder Press": f"{BASE_IMG}Arnold_Dumbbell_Press/1.jpg",
-    "Lateral Raises": f"{BASE_IMG}Arm_Circles/0.jpg",
-    "Front Dumbbell Raises": f"{BASE_IMG}Arm_Circles/1.jpg",
-    "Face Pulls": f"{BASE_IMG}Arm_Circles/0.jpg",
-    "Barbell Squats": f"{BASE_IMG}Barbell_Full_Squat/1.jpg",
-    "Leg Press": f"{BASE_IMG}Barbell_Full_Squat/0.jpg",
-    "Leg Extensions": f"{BASE_IMG}Barbell_Full_Squat/1.jpg",
-    "Lying Leg Curls": f"{BASE_IMG}Barbell_Full_Squat/0.jpg",
-    "Leg Extensions (Knee Safe)": f"{BASE_IMG}Barbell_Full_Squat/1.jpg",
-    "Lat Pulldowns": f"{BASE_IMG}Barbell_Deadlift/0.jpg",
-    "Seated Cable Rows": f"{BASE_IMG}Barbell_Deadlift/1.jpg",
-    "Dumbbell Single-Arm Rows": f"{BASE_IMG}Barbell_Deadlift/0.jpg",
-    "Barbell Deadlift": f"{BASE_IMG}Barbell_Deadlift/1.jpg",
-    "Chest Supported Rows (Back Safe)": f"{BASE_IMG}Barbell_Deadlift/0.jpg",
-    "Dumbbell Bicep Curls": f"{BASE_IMG}Barbell_Curl/1.jpg",
-    "Hammer Curls": f"{BASE_IMG}Alternate_Incline_Dumbbell_Curl/0.jpg",
-    "EZ Bar Preacher Curls": f"{BASE_IMG}Barbell_Curl/0.jpg",
-    "Abdominal Crunches": f"{BASE_IMG}3_4_Sit-Up/0.jpg",
-    "Hanging Leg Raises": f"{BASE_IMG}3_4_Sit-Up/1.jpg",
+# Verified Direct GIF IDs from yuhas/exercise-db (Raw GitHub Domain)
+RAW_GIF_BASE = "https://raw.githubusercontent.com/yuhas/exercise-db/main/gifs/"
+
+EXERCISE_GIFS = {
+    "Incline Dumbbell Press": f"{RAW_GIF_BASE}0314.gif",
+    "Barbell Bench Press": f"{RAW_GIF_BASE}0025.gif",
+    "Chest Flyes": f"{RAW_GIF_BASE}0308.gif",
+    "Cable Crossover": f"{RAW_GIF_BASE}0161.gif",
+    "Pec Deck Flyes (Joint Safe)": f"{RAW_GIF_BASE}0308.gif",
+    "Incline Cable Flyes (Joint Safe)": f"{RAW_GIF_BASE}0161.gif",
+    "Dumbbell Shoulder Press": f"{RAW_GIF_BASE}0405.gif",
+    "Lateral Raises": f"{RAW_GIF_BASE}0334.gif",
+    "Front Dumbbell Raises": f"{RAW_GIF_BASE}0310.gif",
+    "Face Pulls": f"{RAW_GIF_BASE}0160.gif",
+    "Barbell Squats": f"{RAW_GIF_BASE}0043.gif",
+    "Leg Press": f"{RAW_GIF_BASE}0585.gif",
+    "Leg Extensions": f"{RAW_GIF_BASE}0583.gif",
+    "Lying Leg Curls": f"{RAW_GIF_BASE}0593.gif",
+    "Leg Extensions (Knee Safe)": f"{RAW_GIF_BASE}0583.gif",
+    "Lat Pulldowns": f"{RAW_GIF_BASE}0150.gif",
+    "Seated Cable Rows": f"{RAW_GIF_BASE}0239.gif",
+    "Dumbbell Single-Arm Rows": f"{RAW_GIF_BASE}0292.gif",
+    "Barbell Deadlift": f"{RAW_GIF_BASE}0032.gif",
+    "Chest Supported Rows (Back Safe)": f"{RAW_GIF_BASE}0239.gif",
+    "Dumbbell Bicep Curls": f"{RAW_GIF_BASE}0299.gif",
+    "Hammer Curls": f"{RAW_GIF_BASE}0313.gif",
+    "EZ Bar Preacher Curls": f"{RAW_GIF_BASE}0165.gif",
+    "Abdominal Crunches": f"{RAW_GIF_BASE}0274.gif",
+    "Hanging Leg Raises": f"{RAW_GIF_BASE}0402.gif",
 }
 
 EXERCISES = {
@@ -213,7 +212,8 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
     st.success(f"Routine Generated for {muscle} ({level})")
 
   heatmap_url = HEATMAPS.get(
-      muscle.lower(), f"{BASE_IMG}Barbell_Bench_Press/0.jpg"
+      muscle.lower(),
+      "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pectoralis_major.png",
   )
 
   moves_list, sets_list = [], []
@@ -229,12 +229,12 @@ if st.sidebar.button("🚀 Generate Workout Routine"):
 
     with col2:
       st.write("**Target Anatomy**")
-      st.image(heatmap_url, caption=f"{muscle} Target", width=180)
+      st.image(heatmap_url, caption=f"{muscle} Muscle Group", width=180)
 
     with col3:
       st.write("**Exercise Execution**")
-      img_url = EXERCISE_IMAGES.get(move, f"{BASE_IMG}Barbell_Bench_Press/1.jpg")
-      st.image(img_url, caption=f"Execution: {move}", width=220)
+      gif_url = EXERCISE_GIFS.get(move, f"{RAW_GIF_BASE}0025.gif")
+      st.image(gif_url, caption=f"Execution: {move}", width=220)
 
     st.divider()
 
