@@ -32,7 +32,7 @@ injury = st.sidebar.selectbox(
     ["None", "Shoulder", "Knee/Legs", "Lower Back"],
 )
 
-# 100% Reliable Wikimedia Public Direct Media Assets (CORS Safe)
+# Direct Wikimedia muscle group diagrams (Reliable CORS-friendly links)
 HEATMAPS = {
     "chest": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pectoralis_major.png/400px-Pectoralis_major.png",
     "shoulder": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Deltoideus.png/400px-Deltoideus.png",
@@ -42,7 +42,7 @@ HEATMAPS = {
     "abs": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Rectus_abdominis.png/400px-Rectus_abdominis.png",
 }
 
-# Guaranteed Public Exercise Execution Animations / Diagrams
+# Exercise execution animations using Wikimedia assets
 EXERCISE_MEDIA = {
     "Incline Dumbbell Press": (
         "https://upload.wikimedia.org/wikipedia/commons/1/18/Incline-dumbbell-bench-press-2.gif"
@@ -130,7 +130,7 @@ EXERCISE_MEDIA = {
     ),
 }
 
-# Guaranteed 3-4 Moves Per Muscle
+# Guaranteed 3-4 moves per muscle group across all levels
 EXERCISES = {
     "chest": {
         "beginner": [
